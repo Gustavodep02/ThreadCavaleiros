@@ -12,7 +12,7 @@ public class Main {
 		int cavaleiros = 4;
 		int vetPorta[] = {0,0,0,0};
 		for(int i = 0; i<cavaleiros;i++) {
-		ThreadCavaleiro t = new ThreadCavaleiro(0,0,i+1,vetPorta, permissoes, semaforo );
+		ThreadCavaleiro t = new ThreadCavaleiro(i+1,vetPorta, permissoes, semaforo );
 		t.start();
 		}
 

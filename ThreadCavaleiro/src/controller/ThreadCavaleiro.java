@@ -6,17 +6,16 @@ import java.util.concurrent.Semaphore;
 public class ThreadCavaleiro extends Thread {
 	Random random = new Random();
 	private int permissoes;
-	private int tocha;
-	private int pedra;
+	private static boolean tocha=false;
+	private static boolean pedra=false;
 	private int id;
 	private int [] vetPorta;
 	Semaphore semaforo = new Semaphore(permissoes);
 
-	public ThreadCavaleiro(int tocha, int pedra, int id,int[] vetPorta, int permissoes, Semaphore semaforo) {
+	public ThreadCavaleiro( int id,int[] vetPorta, int permissoes, Semaphore semaforo) {
 		this.semaforo = semaforo;
 		this.permissoes = permissoes;
-		this.tocha = tocha;
-		this.pedra = pedra;
+
 		this.id = id;
 		this.vetPorta = vetPorta;
 	}
@@ -43,14 +42,14 @@ public class ThreadCavaleiro extends Thread {
 		while (distanciaAtual < 2000) {
 			try {
 				Thread.sleep(50);
-				System.out.println("Cavaleiro "+id+" já andou "+distanciaAtual+" metros");
+				//System.out.println("Cavaleiro "+id+" jÃ¡ andou "+distanciaAtual+" metros");
 				distanciaAtual += velocidade;
 				
-				if (distanciaAtual>=500 && tocha==0) {
-					tocha++;
+				if (distanciaAtual>=500 && !tocha) {
+					tocha=true;
 					velocidade = bonusTocha(velocidade);
-				}else if(distanciaAtual>=1500 && pedra ==0){
-					pedra++;
+				}else if(distanciaAtual>=1500 && !pedra){
+					pedra=true;
 					velocidade = bonusPedra(velocidade);
 				}
 			} catch (InterruptedException e) {
